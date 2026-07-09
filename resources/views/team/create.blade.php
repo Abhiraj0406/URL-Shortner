@@ -35,6 +35,18 @@
                         </div>
 
                         <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                            {{-- Admin can invite either another Admin or a Member into their company --}}
+                            <select name="role" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="member" {{ old('role') === 'member' ? 'selected' : '' }}>Member</option>
+                                <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                            </select>
+                            @error('role')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                             <input type="password" name="password"
                                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">

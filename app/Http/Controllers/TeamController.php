@@ -32,7 +32,8 @@ class TeamController extends Controller
             'name'       => $request->validated('name'),
             'email'      => $request->validated('email'),
             'password'   => Hash::make($request->validated('password')),
-            'role'       => Role::Member,
+            // Admin can choose to invite as Admin or Member — Role::from() converts the string to enum
+            'role'       => Role::from($request->validated('role')),
             // Always use the logged-in Admin's company — never trust form input for this
             'company_id' => $request->user()->company_id,
         ]);

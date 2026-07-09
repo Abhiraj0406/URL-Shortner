@@ -23,8 +23,10 @@ class StoreTeamMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'email', 'unique:users,email'],
+            // 'in:admin,member' → only allow these two role values
+            'role'     => ['required', 'in:admin,member'],
             'password' => ['required', 'min:8', 'confirmed'],
         ];
     }
