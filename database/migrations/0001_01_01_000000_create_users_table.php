@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            // Links the user to a company. SuperAdmin has no company so this is nullable.
+            $table->foreignId('company_id')->nullable();
+
+            // Defines what the user can do: 'super_admin', 'admin', or 'member'.
+            // array_column(Role::cases(), 'value') extracts the string values from the Role enum.
+            // Default is 'member' — the least privileged role.
+            $table->enum('role', array_column(Role::cases(), 'value'))->default(Role::Member->value);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
