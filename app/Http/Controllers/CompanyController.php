@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
 {
-    /**
-     * Show the Invite Company form.
-     * Only SuperAdmin can reach here — protected by 'role:super_admin' middleware on route.
-     */
+    // Lists all companies for SuperAdmin — route: GET /companies
+    public function index()
+    {
+        $companies = \App\Models\Company::withCount(['users', 'shortUrls'])->latest()->get();
+        return view('companies.index', compact('companies'));
+    }
+
     public function create()
     {
         return view('companies.create');
