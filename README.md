@@ -27,7 +27,7 @@ Users can generate short links that redirect anyone to the original URL.
 **1. Clone the project**
 
 ```bash
-git clone <your-github-repo-url>
+git clone https://github.com/<your-username>/URL-Shortner.git
 cd URL-Shortner
 ```
 

@@ -21,7 +21,7 @@ class SuperAdminSeeder extends Seeder
         User::create([
             'name' => 'Super Admin',
             'email' => 'superadmin@example.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Password'),
             'role' => Role::SuperAdmin,   // Enum value → stored as 'super_admin' in DB
             'company_id' => null,               // SuperAdmin belongs to no company
         ]);

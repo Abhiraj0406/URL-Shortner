@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@acme.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Password'),
             'role' => Role::Admin,         // Can create URLs, invite team members
             'company_id' => $company->id,        // Belongs to Acme Corp
         ]);
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Member User',
             'email' => 'member@acme.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Password'),
             'role' => Role::Member,         // Can create URLs, sees only own URLs
             'company_id' => $company->id,         // Belongs to Acme Corp
         ]);
