@@ -15,10 +15,11 @@ class RedirectController extends Controller
      */
     public function __invoke(string $code)
     {
-        // Find the short URL by its code, or return 404 if not found
         $shortUrl = ShortUrl::where('code', $code)->firstOrFail();
 
-        // Redirect to the original long URL (external redirect)
+        // Atomically increment the visit counter
+        $shortUrl->increment('hits');
+
         return redirect()->away($shortUrl->long_url);
     }
 }
