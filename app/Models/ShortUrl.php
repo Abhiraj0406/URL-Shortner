@@ -22,6 +22,7 @@ class ShortUrl extends Model
         'company_id',
         'long_url',
         'code',
+        'hits', // incremented each time the short URL is visited
     ];
 
     /**
