@@ -30,11 +30,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:super_admin'])->group(function () {
+    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
     Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
     Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/team', [TeamController::class, 'index'])->name('team.index');
     Route::get('/team/create', [TeamController::class, 'create'])->name('team.create');
     Route::post('/team', [TeamController::class, 'store'])->name('team.store');
 });

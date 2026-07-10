@@ -48,17 +48,25 @@
                                 </a>
                             @endcan
 
-                            {{-- Invite Team Member (Admin) --}}
-                            @if ($user->role === \App\Enums\Role::Admin && \Illuminate\Support\Facades\Route::has('team.create'))
-                                <a href="{{ route('team.create') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition">
+                            {{-- View Team + Invite Member (Admin) --}}
+                            @if ($user->role === \App\Enums\Role::Admin)
+                                <a href="{{ route('team.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
+                                    <svg class="w-4 h-4 mr-1.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"></path></svg>
+                                    View Team
+                                </a>
+                                <a href="{{ route('team.create') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
                                     <svg class="w-4 h-4 mr-1.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
                                     Invite Member
                                 </a>
                             @endif
 
-                            {{-- Invite New Company (SuperAdmin) --}}
-                            @if ($user->role === \App\Enums\Role::SuperAdmin && \Illuminate\Support\Facades\Route::has('companies.create'))
-                                <a href="{{ route('companies.create') }}" class="inline-flex items-center px-4 py-2 bg-purple-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition shadow-sm">
+                            {{-- View Companies + Add Company (SuperAdmin) --}}
+                            @if ($user->role === \App\Enums\Role::SuperAdmin)
+                                <a href="{{ route('companies.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition">
+                                    <svg class="w-4 h-4 mr-1.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"></path></svg>
+                                    View Companies
+                                </a>
+                                <a href="{{ route('companies.create') }}" class="inline-flex items-center px-4 py-2 bg-purple-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition shadow-sm">
                                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                                     Add Company
                                 </a>
@@ -76,6 +84,8 @@
                                     @if ($user->role === \App\Enums\Role::SuperAdmin)
                                         <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Company</th>
                                     @endif
+                                    {{-- Hits column: shows redirect count for each short URL --}}
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Hits</th>
                                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Created On</th>
                                 </tr>
                             </thead>
@@ -100,13 +110,18 @@
                                                 </span>
                                             </td>
                                         @endif
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
+                                            {{ $url->hits }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $url->created_at->format('M d, Y') }}
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="{{ $user->role === \App\Enums\Role::SuperAdmin ? '4' : '3' }}" class="px-6 py-16 text-center">
+                                        {{-- SuperAdmin: 5 cols (Short URL + Long URL + Company + Hits + Created) --}}
+                                        {{-- Admin/Member: 4 cols (Short URL + Long URL + Hits + Created) --}}
+                                        <td colspan="{{ $user->role === \App\Enums\Role::SuperAdmin ? '5' : '4' }}" class="px-6 py-16 text-center">
                                             <div class="flex flex-col items-center justify-center">
                                                 <div class="p-3 bg-gray-50 rounded-full border border-gray-100 mb-3">
                                                     <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
