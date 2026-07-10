@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Hash;
 
 class TeamController extends Controller
 {
+    // Lists all users in the Admin's company — route: GET /team
+    public function index(\Illuminate\Http\Request $request)
+    {
+        $members = \App\Models\User::where('company_id', $request->user()->company_id)->latest()->get();
+        return view('team.index', compact('members'));
+    }
+
     /**
      * Show the Invite Team Member form.
      * Only Admin can reach here — protected by 'role:admin' middleware on route.
