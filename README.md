@@ -27,7 +27,7 @@ Users can generate short links that redirect anyone to the original URL.
 **1. Clone the project**
 
 ```bash
-git clone https://github.com/<your-username>/URL-Shortner.git
+git clone https://github.com/Abhiraj0406/URL-Shortner.git
 cd URL-Shortner
 ```
 
@@ -50,12 +50,14 @@ php artisan key:generate
 Edit `.env` and update these values:
 
 ```
-DB_DATABASE=url_shortener
+DB_DATABASE=url_shortner
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-Create the database in phpMyAdmin manually (name it `url_shortener`).
+> **Note:** The database name is `url_shortner` (no 'e' — matches the `.env` default).
+
+Create the database in phpMyAdmin manually (name it `url_shortner`).
 
 **5. Run migrations and seed**
 
