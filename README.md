@@ -24,48 +24,51 @@ Users can generate short links that redirect anyone to the original URL.
 
 ### Steps
 
-**1. Clone the project**
+1. Clone the project
 
 ```bash
 git clone https://github.com/Abhiraj0406/URL-Shortner.git
 cd URL-Shortner
 ```
 
-**2. Install dependencies**
+2. Install PHP and JavaScript dependencies
 
 ```bash
 composer install
 npm install
 ```
 
-**3. Create environment file**
+3. Create the environment file
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-**4. Set up the database**
+4. Configure the database
 
-Edit `.env` and update these values:
+Open the `.env` file and update the database settings:
 
-```
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
 DB_DATABASE=url_shortner
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-> **Note:** The database name is `url_shortner` (no 'e' — matches the `.env` default).
 
-Create the database in phpMyAdmin manually (name it `url_shortner`).
+Run the database migration and seeding commands below to create the schema and seed the demo data.
 
-**5. Run migrations and seed**
+5. Run the Artisan setup commands
 
 ```bash
-php artisan migrate:fresh --seed
+php artisan migrate
+php artisan db:seed
 ```
 
-This creates all tables and three test users:
+The migrations will create the tables and seed three demo users:
 
 | Email | Password | Role |
 |---|---|---|
@@ -73,7 +76,7 @@ This creates all tables and three test users:
 | admin@acme.com | password | Admin |
 | member@acme.com | password | Member |
 
-**6. Build assets and start the server**
+6. Build assets and start the app
 
 ```bash
 npm run build
